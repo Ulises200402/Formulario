@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Editorial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="form-container">
+    <h2>Formulario para Autores</h2>
+    <form action="enviar_formulario.php" method="post" enctype="multipart/form-data"
+      onsubmit="return validarFormulario()">
+
+      <!-- Título del libro -->
+      <div class="input-container">
+        <input type="text" id="titulo" name="titulo" placeholder=" " required>
+        <label for="titulo">Título del libro</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Nombre del Autor -->
+      <div class="input-container">
+        <input type="text" id="autor" name="autor" placeholder=" " required>
+        <label for="autor">Autor(es)</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Fecha de nacimiento -->
+      <div class="input-container">
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Correo Electrónico -->
+      <div class="input-container">
+        <input type="email" id="email" name="email" placeholder=" " required>
+        <label for="email">Correo electrónico</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Biografía -->
+      <div class="input-container">
+        <textarea id="biografia" name="biografia" placeholder=" " rows="4"></textarea>
+        <label for="biografia">Biografía del autor</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Foto del Autor -->
+      <div class="input-container">
+        <input type="file" id="fotoautor" name="fotoautor" accept="image/*" enctype="multipart/form-data">
+        <label for="fotoautor">Foto del autor (JPG/PNG)</label>
+      </div>
+
+      <h2>Información del Libro</h2>
+
+      <!-- Descripción del libro -->
+      <div class="input-container">
+        <textarea id="descripcion" name="descripcion" placeholder=" " rows="4"></textarea>
+        <label for="descripcion">Descripción del libro</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Género Literario -->
+      <div class="input-container">
+        <select name="genero" id="genero">
+          <option value="" disabled selected>Selecciona un género</option>
+          <option value="ficcion">Ficción</option>
+          <option value="no-ficcion">No ficción</option>
+          <option value="novela">Novela</option>
+          <option value="cuento">Cuento</option>
+          <option value="poesia">Poesía</option>
+          <option value="fantasia">Fantasía</option>
+          <option value="ciencia-ficcion">Ciencia ficción</option>
+          <option value="terror">Terror</option>
+          <option value="misterio">Misterio</option>
+          <option value="thriller">Thriller</option>
+          <option value="romance">Romance</option>
+          <option value="historico">Histórico</option>
+          <option value="aventura">Aventura</option>
+          <option value="drama">Drama</option>
+          <option value="autoayuda">Autoayuda</option>
+          <option value="biografia">Biografía</option>
+          <option value="ensayo">Ensayo</option>
+          <option value="filosofia">Filosofía</option>
+          <option value="infantil">Infantil</option>
+          <option value="juvenil">Juvenil</option>
+          <option value="humor">Humor</option>
+          <option value="erotico">Erótico</option>
+          <option value="negocios">Negocios</option>
+          <option value="desarrollo-personal">Desarrollo personal</option>
+          <option value="cocina">Cocina</option>
+          <option value="educativo">Educativo</option>
+          <option value="religioso">Religioso</option>
+          <option value="policial">Policial</option>
+          <option value="mitologia">Mitología</option>
+          <option value="ciencia">Ciencia</option>
+          <option value="deportes">Deportes</option>
+        </select>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Portada del libro -->
+      <div class="input-container">
+        <input type="file" id="portada" name="portada" accept="image/*">
+        <label for="portada">Portada del libro (JPG/PNG)</label>
+      </div>
+
+      <!-- Archivo del libro -->
+      <div class="input-container">
+        <input type="file" id="archivo_libro" name="archivo_libro" accept=".pdf">
+        <label for="archivo_libro">Archivo del libro (PDF)</label>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  <script>
+    function validarFormulario() {
+      // Obtener los valores de los inputs
+      const titulo = document.getElementById('titulo').value.trim();
+      const autor = document.getElementById('autor').value.trim();
+      const fechaNacimiento = document.getElementById('fecha_nacimiento').value;
+      const email = document.getElementById('email').value.trim();
+      const biografia = document.getElementById('biografia').value.trim();
+      const descripcion = document.getElementById('descripcion').value.trim();
+      const genero = document.getElementById('genero').value.trim();
+
+      // Obtener los archivos
+      const fotoAutor = document.getElementById('fotoautor').files[0];
+      const portada = document.getElementById('portada').files[0];
+      const archivoLibro = document.getElementById('archivo_libro').files[0];
+
+      // Validación de campos de texto
+      if (titulo === '' || autor === '' || fechaNacimiento === '' || email === '' || descripcion === '' || genero === '') {
+        alert('Por favor, completa todos los campos obligatorios.');
+        return false;
+      }
+
+      // Validar email con una expresión regular
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Por favor, introduce un correo electrónico válido.');
+        return false;
+      }
+
+      // Validar tamaño de la biografía (opcional)
+      if (biografia.length > 500) {
+        alert('La biografía no puede superar los 500 caracteres.');
+        return false;
+      }
+
+      if (empty($_POST['genero'])) {
+        die("Error: Debes seleccionar un género.");
+      }
+
+      // Validar archivos (si se han adjuntado)
+      if (fotoAutor && !validarImagen(fotoAutor)) {
+        alert('La foto del autor debe ser un archivo JPG o PNG y no superar los 2MB.');
+        return false;
+      }
+
+      if (portada && !validarImagen(portada)) {
+        alert('La portada debe ser un archivo JPG o PNG y no superar los 2MB.');
+        return false;
+      }
+
+      if (archivoLibro && !validarPDF(archivoLibro)) {
+        alert('El archivo del libro debe ser un PDF y no superar los 5MB.');
+        return false;
+      }
+
+
+      return true;
+    }
+
+    // Función para validar imágenes (JPG/PNG y máximo 2MB)
+    function validarImagen(archivo) {
+      const formatosPermitidos = ['image/jpeg', 'image/png'];
+      const tamañoMaximo = 2 * 1024 * 1024; // 2MB
+
+      return formatosPermitidos.includes(archivo.type) && archivo.size <= tamañoMaximo;
+    }
+
+    // Función para validar PDF (máximo 5MB)
+    function validarPDF(archivo) {
+      const tamañoMaximo = 5 * 1024 * 1024; // 5MB
+
+      return archivo.type === 'application/pdf' && archivo.size <= tamañoMaximo;
+    }
+  </script>
+</body>
+
+</html>
