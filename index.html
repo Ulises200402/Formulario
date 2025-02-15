@@ -14,25 +14,33 @@
     <form action="enviar_formulario.php" method="post" enctype="multipart/form-data"
       onsubmit="return validarFormulario()">
 
-      <!-- Título del libro -->
+      <!-- Nombre Completo -->
       <div class="input-container">
-        <input type="text" id="titulo" name="titulo" placeholder=" " required>
-        <label for="titulo">Título del libro</label>
+        <input type="text" id="nombre_completo" name="nombre_completo" placeholder=" " required>
+        <label for="nombre_completo">Nombre Completo</label>
         <div class="underline"></div>
       </div>
 
-      <!-- Nombre del Autor -->
+      <!-- Nacionalidad -->
       <div class="input-container">
-        <input type="text" id="autor" name="autor" placeholder=" " required>
-        <label for="autor">Autor(es)</label>
+        <input type="text" id="nacionalidad" name="nacionalidad" placeholder=" " required>
+        <label for="nacionalidad">Nacionalidad</label>
         <div class="underline"></div>
       </div>
 
-      <!-- Fecha de nacimiento -->
-      <div class="input-container">
-        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
-        <label for="fecha_nacimiento">Fecha de nacimiento</label>
-        <div class="underline"></div>
+      <!-- Domicilio y Código Postal -->
+      <div class="input-group">
+        <div class="input-container">
+          <input type="text" id="domicilio" name="domicilio" placeholder=" " required>
+          <label for="domicilio">Domicilio</label>
+          <div class="underline"></div>
+        </div>
+
+        <div class="input-container">
+          <input type="text" id="codigo_postal" name="codigo_postal" placeholder=" " required>
+          <label for="codigo_postal">Código Postal</label>
+          <div class="underline"></div>
+        </div>
       </div>
 
       <!-- Correo Electrónico -->
@@ -42,63 +50,91 @@
         <div class="underline"></div>
       </div>
 
-      <!-- Biografía -->
-      <div class="input-container">
-        <textarea id="biografia" name="biografia" placeholder=" " rows="4"></textarea>
-        <label for="biografia">Biografía del autor</label>
-        <div class="underline"></div>
-      </div>
-
       <!-- Foto del Autor -->
       <div class="input-container">
-        <input type="file" id="fotoautor" name="fotoautor" accept="image/*" enctype="multipart/form-data">
+        <input type="file" id="fotoautor" name="fotoautor" accept="image/*">
         <label for="fotoautor">Foto del autor (JPG/PNG)</label>
       </div>
 
       <h2>Información del Libro</h2>
 
-      <!-- Descripción del libro -->
+      <!-- ISBN -->
+      <div class="input-group">
+        <div class="input-container">
+          <input type="text" id="isbn" name="isbn" placeholder=" " required>
+          <label for="isbn">ISBN</label>
+          <div class="underline"></div>
+        </div>
+        <div class="info-box">¿No tienes ISBN? Consulta <a href="https://www.isbn.org.ar/">aquí</a>.</div>
+      </div>
+
+      <!-- DHDA -->
+      <div class="input-group">
+        <div class="input-container">
+          <input type="text" id="dhda" name="dhda" placeholder=" " required>
+          <label for="dhda">DHDA</label>
+          <div class="underline"></div>
+        </div>
+        <div class="info-box">Consulta cómo obtener tu DHDA <a href="#">aquí</a>.</div>
+      </div>
+
+      <!-- Género Literario (THEA) -->
       <div class="input-container">
-        <textarea id="descripcion" name="descripcion" placeholder=" " rows="4"></textarea>
-        <label for="descripcion">Descripción del libro</label>
+        <select name="genero" id="genero">
+          <option value="" disabled selected>Selecciona un género THEA</option>
+          <option value="narrativo">Narrativo</option>
+          <option value="no-ficcion">No ficción</option>
+          <option value="lirico">Lirico</option>
+          <option value="dramatico">Dramatico</option>
+        </select>
         <div class="underline"></div>
       </div>
 
-      <!-- Género Literario -->
+      <!-- Sello Editorial -->
       <div class="input-container">
-        <select name="genero" id="genero">
-          <option value="" disabled selected>Selecciona un género</option>
-          <option value="ficcion">Ficción</option>
-          <option value="no-ficcion">No ficción</option>
-          <option value="novela">Novela</option>
-          <option value="cuento">Cuento</option>
-          <option value="poesia">Poesía</option>
-          <option value="fantasia">Fantasía</option>
-          <option value="ciencia-ficcion">Ciencia ficción</option>
-          <option value="terror">Terror</option>
-          <option value="misterio">Misterio</option>
-          <option value="thriller">Thriller</option>
-          <option value="romance">Romance</option>
-          <option value="historico">Histórico</option>
-          <option value="aventura">Aventura</option>
-          <option value="drama">Drama</option>
-          <option value="autoayuda">Autoayuda</option>
-          <option value="biografia">Biografía</option>
-          <option value="ensayo">Ensayo</option>
-          <option value="filosofia">Filosofía</option>
-          <option value="infantil">Infantil</option>
-          <option value="juvenil">Juvenil</option>
-          <option value="humor">Humor</option>
-          <option value="erotico">Erótico</option>
-          <option value="negocios">Negocios</option>
-          <option value="desarrollo-personal">Desarrollo personal</option>
-          <option value="cocina">Cocina</option>
-          <option value="educativo">Educativo</option>
-          <option value="religioso">Religioso</option>
-          <option value="policial">Policial</option>
-          <option value="mitologia">Mitología</option>
-          <option value="ciencia">Ciencia</option>
-          <option value="deportes">Deportes</option>
+        <input type="text" id="sello_editorial" name="sello_editorial" placeholder=" ">
+        <label for="sello_editorial">Sello Editorial (si tiene)</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Características del Título -->
+      <div class="input-container">
+        <input type="text" id="caracteristicas_titulo" name="caracteristicas_titulo" placeholder=" " required>
+        <label for="caracteristicas_titulo">Características del título</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Subtítulo -->
+      <div class="input-container">
+        <input type="text" id="subtitulo" name="subtitulo" placeholder=" ">
+        <label for="subtitulo">Subtítulo (si tiene)</label>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Formato de impresión -->
+      <div class="input-container">
+        <select name="formato" id="formato">
+          <option value="" disabled selected>Selecciona un formato</option>
+          <option value="blanco_negro">Blanco y negro</option>
+          <option value="color">Color</option>
+          <option value="fotolibro">Fotolibro</option>
+        </select>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Tamaño del libro -->
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="tamaño[]" value="14x21"> 14x21</label>
+        <label><input type="checkbox" name="tamaño[]" value="17x23"> 17x23</label>
+        <label><input type="checkbox" name="tamaño[]" value="21x29"> 21x29</label>
+      </div>
+
+      <!-- Solapa -->
+      <div class="input-container">
+        <select name="solapa" id="solapa">
+          <option value="" disabled selected>Selecciona una opción de solapa</option>
+          <option value="solapa_derecha">Solapa derecha</option>
+          <option value="solapa_izquierda">Solapa izquierda</option>
         </select>
         <div class="underline"></div>
       </div>
@@ -114,6 +150,12 @@
         <input type="file" id="archivo_libro" name="archivo_libro" accept=".pdf">
         <label for="archivo_libro">Archivo del libro (PDF)</label>
       </div>
+
+      <!-- Aceptar términos -->
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="terminos" name="terminos" required> Acepto los términos y condiciones</label>
+      </div>
+
       <button type="submit">Enviar</button>
     </form>
   </div>

@@ -1,181 +1,140 @@
 /* Estilos generales */
 body {
   font-family: Arial, sans-serif;
-  background: url('fondo.jpg') no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: flex;
-  min-height: 100vh;
+  background-color: #f4f4f4;
   margin: 0;
-  padding: 50px 20px; /* Espaciado extra para evitar que se corte arriba */
-  overflow-y: auto; /* Permite desplazarse si el contenido es muy largo */
+  padding: 0;
 }
 
-h2{
-  font-family: 'Times New Roman', Times, serif;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-/* Contenedor del formulario */
 .form-container {
-  max-width: 500px;
+  width: 80%;
+  max-width: 900px;
   margin: 50px auto;
-  padding: 80px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Contenedor de cada input */
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Estilo para los campos de entrada */
 .input-container {
   position: relative;
-  margin: 20px 0;
-  width: 100%;
+  margin-bottom: 20px;
 }
 
-/* Estilos para etiquetas */
-label {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  font-size: 16px;
-  color: #777;
-  pointer-events: none;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Inputs y textarea */
 .input-container input,
-.input-container textarea {
+.input-container textarea,
+.input-container select {
   width: 100%;
   padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #f1f1f1;
-  color: #333;
-  outline: none;
-  transition: border 0.3s;
+  box-sizing: border-box;
 }
 
-/* Estilos específicos para textarea */
-.input-container textarea {
-  resize: none;
-  height: 100px;
-}
-
-/* Subrayado animado */
-.underline {
+.input-container label {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  transition: width 0.3s;
-}
-
-/* Cuando el input está en foco o tiene contenido, la etiqueta se mueve arriba */
-.input-container input:focus + label,
-.input-container input:not(:placeholder-shown) + label,
-.input-container textarea:focus + label,
-.input-container textarea:not(:placeholder-shown) + label {
-  top: 0;
+  top: -10px;
   left: 10px;
   font-size: 12px;
-  color: #4158D0;
-  font-weight: bold;
+  color: #666;
+  background-color: white;
+  padding: 0 5px;
 }
 
-/* Subrayado se expande cuando el input está en foco */
-.input-container input:focus + .underline,
-.input-container textarea:focus + .underline {
-  width: 100%;
-}
-
-/* Estilo para el select */
-.input-container select {
-  width: 100%;
-  padding: 12px; /* Igual que los inputs */
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px; /* Bordes redondeados */
-  background-color: #f8f8f8;
-  color: #333;
-  outline: none;
-  transition: border 0.3s;
-  appearance: none; /* Oculta el estilo por defecto del navegador */
-  cursor: pointer;
-}
-
-/* Agregar un icono de flecha para el select */
-.input-container {
-  position: relative;
-}
-
-.input-container select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="%234158D0" d="M7 10l5 5 5-5H7z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 18px;
-  padding-right: 35px; /* Espacio para la flecha */
-}
-
-/* Cuando el select está en foco */
-.input-container select:focus {
-  border-color: #4158D0;
-}
-
-/* Subrayado animado como en los inputs */
-.underline {
+.input-container .underline {
   position: absolute;
-  bottom: 0;
   left: 0;
-  width: 0;
+  bottom: 0;
+  width: 100%;
   height: 2px;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  transition: width 0.3s;
+  background-color: #3498db;
+  display: none;
 }
 
+/* Mostrar la línea cuando el input está enfocado */
+.input-container input:focus + .underline,
+.input-container textarea:focus + .underline,
 .input-container select:focus + .underline {
-  width: 100%;
+  display: block;
 }
 
-/* Botón de envío */
+.input-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.input-group .input-container {
+  flex: 1;
+}
+
+.checkbox-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Estilos para los botones */
 button {
-  display: block;
   width: 100%;
-  padding: 12px;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  color: white;
-  font-size: 16px;
+  padding: 15px;
+  background-color: #3498db;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
-  opacity: 0.9;
+  background-color: #2980b9;
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-  .form-container {
-    width: 90%;
-    padding: 15px;
+/* Estilo para los divs informativos */
+.info-box {
+  margin-top: -10px;
+  font-size: 12px;
+  color: #888;
+}
+
+.info-box a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.info-box a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos de los checkboxes */
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Estilos para el formulario en general */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsividad para dispositivos móviles */
+@media (max-width: 600px) {
+  .input-group {
+    flex-direction: column;
   }
 
-  .input-container input,
-  .input-container textarea {
-    font-size: 14px;
-    padding: 8px;
+  .checkbox-group {
+    flex-direction: column;
+  }
+
+  button {
+    width: auto;
   }
 }
