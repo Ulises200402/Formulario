@@ -1,4 +1,12 @@
-php_value upload_max_filesize 1G
-php_value post_max_size 1G
-php_value max_execution_time 1200
-php_value max_input_time 1200
+# Establecer el límite de tamaño de los archivos subidos
+php_value upload_max_filesize 1024M
+php_value post_max_size 1024M
+
+# Aumentar el número de archivos que se pueden subir simultáneamente
+php_value max_file_uploads 20
+
+# Establecer el tiempo máximo de ejecución para los scripts de PHP (si es necesario)
+php_value max_execution_time 300
+
+# Establecer el límite de tiempo máximo para leer los datos del archivo (en segundos)
+php_value max_input_time 300

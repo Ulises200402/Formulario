@@ -5,14 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Editorial</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
   <div class="form-container">
     <h2>Formulario para Autores</h2>
-    <form action="enviar_formulario.php" method="post" enctype="multipart/form-data"
-      onsubmit="return validarFormulario()">
+    <form action="enviar_formulario.php" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario()">
 
       <!-- Nombre Completo -->
       <div class="input-container">
@@ -123,11 +122,23 @@
       </div>
 
       <!-- Tamaño del libro -->
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="tamaño[]" value="14x21"> 14x21</label>
-        <label><input type="checkbox" name="tamaño[]" value="17x23"> 17x23</label>
-        <label><input type="checkbox" name="tamaño[]" value="21x29"> 21x29</label>
+      <div class="input-container">
+        <label>Tamaño:</label>
+        <div class="tamaño-container">
+          <div class="tamaño-option">
+              <input type="radio" name="tamaño" value="14x21" id="14x21">
+              <label for="14x21">14x21</label>
+          </div>
+          <div class="tamaño-option">
+              <input type="radio" name="tamaño" value="17x23" id="17x23">
+              <label for="17x23">17x23</label>
+          </div>
+          <div class="tamaño-option">
+              <input type="radio" name="tamaño" value="21x29" id="21x29">
+              <label for="21x29">21x29</label>
+          </div>
       </div>
+    </div>
 
       <!-- Solapa -->
       <div class="input-container">
@@ -169,11 +180,10 @@
       const biografia = document.getElementById('biografia').value.trim();
       const descripcion = document.getElementById('descripcion').value.trim();
       const genero = document.getElementById('genero').value.trim();
-
-      // Obtener los archivos
       const fotoAutor = document.getElementById('fotoautor').files[0];
       const portada = document.getElementById('portada').files[0];
       const archivoLibro = document.getElementById('archivo_libro').files[0];
+      const terminos = document.getElementById('terminos').checked;
 
       // Validación de campos de texto
       if (titulo === '' || autor === '' || fechaNacimiento === '' || email === '' || descripcion === '' || genero === '') {
@@ -181,21 +191,10 @@
         return false;
       }
 
-      // Validar email con una expresión regular
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('Por favor, introduce un correo electrónico válido.');
+      // Validar que se haya aceptado los términos y condiciones
+      if (!terminos) {
+        alert('Debes aceptar los términos y condiciones para continuar.');
         return false;
-      }
-
-      // Validar tamaño de la biografía (opcional)
-      if (biografia.length > 500) {
-        alert('La biografía no puede superar los 500 caracteres.');
-        return false;
-      }
-
-      if (empty($_POST['genero'])) {
-        die("Error: Debes seleccionar un género.");
       }
 
       // Validar archivos (si se han adjuntado)
@@ -213,7 +212,6 @@
         alert('El archivo del libro debe ser un PDF y no superar los 5MB.');
         return false;
       }
-
 
       return true;
     }

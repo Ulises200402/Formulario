@@ -1,9 +1,12 @@
 /* Estilos generales */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-image: url("/img/Fondo2.jpg") !important;
+  background-size: cover; 
+  background-position: center; 
+  background-attachment: fixed; 
   margin: 0;
   padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .form-container {
@@ -11,8 +14,9 @@ body {
   max-width: 900px;
   margin: 50px auto;
   padding: 20px;
-  background-color: #fff;
+  background-color: #ffffff8d;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5%;
 }
 
 h2 {
@@ -93,6 +97,40 @@ h2 {
 .checkbox-group input[type="checkbox"] {
   margin-right: 8px;
   transform: scale(1.2); /* Agranda los checkboxes un poco */
+}
+
+.tamaño-container {
+  display: flex; /* Alinea los elementos horizontalmente */
+  justify-content: space-around; /* Espaciado uniforme entre los botones */
+  gap: 20px; /* Espacio entre las opciones */
+  align-items: flex-start; /* Alinea los elementos al inicio del contenedor */
+}
+
+/* Contenedor individual de cada opción */
+.tamaño-option {
+  text-align: center; /* Centra el texto debajo de los círculos */
+}
+
+/* Asegura que los radio buttons estén alineados correctamente */
+input[type="radio"] {
+  display: block;
+  margin-bottom: 5px; /* Separación entre el círculo y el texto */
+  width: 30px; /* Controla el tamaño del radio button */
+  height: 30px;
+  margin: 0 auto; /* Centra el radio button */
+}
+
+/* Estilo para los labels */
+.tamaño-option label {
+  display: block; /* Hace que el texto esté debajo del círculo */
+  margin-top: 10px; /* Separación entre el círculo y el texto */
+  text-align: center;
+  position: relative;
+}
+
+/* Opcional: Agregar un estilo al radio button cuando está seleccionado */
+input[type="radio"]:checked {
+  background-color: #4CAF50; /* Color cuando está seleccionado */
 }
 
 /* Estilos para los botones */
