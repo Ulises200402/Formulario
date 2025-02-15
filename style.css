@@ -75,10 +75,24 @@ h2 {
   flex: 1;
 }
 
+/* Ajuste para los checkboxes (alinear correctamente) */
 .checkbox-group {
   display: flex;
-  gap: 15px;
+  justify-content: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
   margin-top: 10px;
+}
+
+.checkbox-group label {
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2); /* Agranda los checkboxes un poco */
 }
 
 /* Estilos para los botones */
