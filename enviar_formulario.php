@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $codigo_postal = htmlspecialchars($_POST['codigo_postal']);
     $email = htmlspecialchars($_POST['email']);
     $isbn = htmlspecialchars($_POST['isbn']);
-    $dhda = htmlspecialchars($_POST['dhda']);
+    $dhda = htmlspecialchars($_POST['dnda']);
     $genero = htmlspecialchars($_POST['genero']);
     $sello_editorial = htmlspecialchars($_POST['sello_editorial']);
     $caracteristicas_titulo = htmlspecialchars($_POST['caracteristicas_titulo']);
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       "\n" .
                       "Información del libro:\n" . 
                       "ISBN: " . $isbn . "\n" . 
-                      "DHDA: " . $dhda . "\n" . 
+                      "DNDA: " . $dnda . "\n" . 
                       "Género Literario: " . $genero . "\n" . 
                       "Sello Editorial: " . $sello_editorial . "\n" . 
                       "Características del título: " . $caracteristicas_titulo . "\n" . 
