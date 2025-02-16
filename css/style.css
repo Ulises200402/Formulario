@@ -1,6 +1,6 @@
 /* Estilos generales */
 body {
-  background-image: url("/img/Fondo2.jpg") !important;
+  background-image: url("../img/Fondo2.jpg");
   background-size: cover; 
   background-position: center; 
   background-attachment: fixed; 
@@ -14,9 +14,9 @@ body {
   max-width: 900px;
   margin: 50px auto;
   padding: 20px;
-  background-color: #ffffff8d;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.56);
+  border-radius: 2%;
 }
 
 h2 {
