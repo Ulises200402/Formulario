@@ -11,7 +11,8 @@
 <body>
   <div class="form-container">
     <h2>Formulario para Autores</h2>
-    <form action="enviar_formulario.php" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+    <form action="enviar_formulario.php" method="post" enctype="multipart/form-data"
+      onsubmit="return validarFormulario()">
 
       <!-- Nombre Completo -->
       <div class="input-container">
@@ -49,6 +50,13 @@
         <div class="underline"></div>
       </div>
 
+      <!-- Numero de telefono-->
+      <div class="input-container">
+        <label for="telefono">Número de Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" pattern="[0-9]+" maxlength="15" required>
+        <small>Solo se permiten números</small>
+      </div>
+
       <!-- Foto del Autor -->
       <div class="input-container">
         <input type="file" id="fotoautor" name="fotoautor" accept="image/*">
@@ -60,7 +68,8 @@
       <!-- ISBN -->
       <div class="input-group">
         <div class="input-container">
-          <input type="text" id="isbn" name="isbn" placeholder=" " required>
+          <input type="text" id="isbn" name="isbn" pattern="\d{3}-\d-\d{2,5}-\d{2,7}-\d" maxlength="17" required
+            placeholder="Ej: 978-3-16-148410-0">
           <label for="isbn">ISBN</label>
           <div class="underline"></div>
         </div>
@@ -70,11 +79,12 @@
       <!-- DHDA -->
       <div class="input-group">
         <div class="input-container">
-          <input type="text" id="dhda" name="dnda" placeholder=" " required>
+          <input type="text" id="dhda" name="dnda" pattern="\d{6,7}/\d{4}" required placeholder="Ej: 1234567/2024">
           <label for="dnda">DNDA</label>
           <div class="underline"></div>
         </div>
-        <div class="info-box">Consulta cómo obtener tu DHDA <a href="https://www.argentina.gob.ar/justicia/derechodeautor">aquí</a>.</div>
+        <div class="info-box">Consulta cómo obtener tu DHDA <a
+            href="https://www.argentina.gob.ar/justicia/derechodeautor">aquí</a>.</div>
       </div>
 
       <!-- Género Literario (THEA) -->
@@ -126,19 +136,19 @@
         <label>Tamaño:</label>
         <div class="tamaño-container">
           <div class="tamaño-option">
-              <input type="radio" name="tamaño" value="14x21" id="14x21">
-              <label for="14x21">14x21</label>
+            <input type="radio" name="tamaño" value="14x21" id="14x21">
+            <label for="14x21">14x21</label>
           </div>
           <div class="tamaño-option">
-              <input type="radio" name="tamaño" value="17x23" id="17x23">
-              <label for="17x23">17x23</label>
+            <input type="radio" name="tamaño" value="17x23" id="17x23">
+            <label for="17x23">17x23</label>
           </div>
           <div class="tamaño-option">
-              <input type="radio" name="tamaño" value="21x29" id="21x29">
-              <label for="21x29">21x29</label>
+            <input type="radio" name="tamaño" value="21x29" id="21x29">
+            <label for="21x29">21x29</label>
           </div>
+        </div>
       </div>
-    </div>
 
       <!-- Solapa -->
       <div class="input-container">
@@ -185,11 +195,22 @@
       const archivoLibro = document.getElementById('archivo_libro').files[0];
       const terminos = document.getElementById('terminos').checked;
 
+      document.getElementById("isbn").addEventListener("input", function (e) {
+        this.value = this.value.replace(/[^0-9-]/g, ""); // Permite solo números y guiones
+      });
+      document.getElementById("dnda").addEventListener("input", function (e) {
+        this.value = this.value.replace(/[^0-9/]/g, ""); // Permite solo números y "/"
+      });
+
       // Validación de campos de texto
       if (titulo === '' || autor === '' || fechaNacimiento === '' || email === '' || descripcion === '' || genero === '') {
         alert('Por favor, completa todos los campos obligatorios.');
         return false;
       }
+
+      document.getElementById("telefono").addEventListener("input", function (e) {
+        this.value = this.value.replace(/\D/g, ""); // Elimina cualquier carácter que no sea un número
+      });
 
       // Validar que se haya aceptado los términos y condiciones
       if (!terminos) {

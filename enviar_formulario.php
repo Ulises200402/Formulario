@@ -6,6 +6,19 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
+function validarISBN($isbn) {
+    return preg_match('/^\d{3}-\d-\d{2,5}-\d{2,7}-\d$/', $isbn) || 
+           preg_match('/^\d-\d{2,5}-\d{2,7}-\d$/', $isbn);
+}
+
+function validarDNDA($dnda) {
+    return preg_match('/^\d{6,7}\/\d{4}$/', $dnda);
+}
+
+function validarTelefono($telefono) {
+    return preg_match('/^\d+$/', $telefono);
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recupera los datos del formulario
     $nombre_completo = htmlspecialchars($_POST['nombre_completo']);
@@ -22,11 +35,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $formato = htmlspecialchars($_POST['formato']);
     $solapa = htmlspecialchars($_POST['solapa']);
     $tamaño = isset($_POST['tamaño']) ? $_POST['tamaño'] : "No seleccionado";
+    $telefono = isset($_POST['telefono']) ? htmlspecialchars($_POST['telefono']) : "No proporcionado";
     $acepto_terminos = $_POST['terminos'] === 'on' ? true : false;
 
     // Verifica que se acepten los términos
     if (!$acepto_terminos) {
         header("Location: error.html?error=" . urlencode("Debe aceptar los términos y condiciones."));
+        exit();
+    }
+
+    if (!validarISBN($isbn)) {
+        header("Location: error.html?error=" . urlencode("Formato de ISBN inválido."));
+        exit();
+    }
+
+    if (!validarDNDA($dhda)) {
+        header("Location: error.html?error=" . urlencode("Formato de DNDA inválido."));
+        exit();
+    }
+
+    if (!validarTelefono($telefono)) {
+        header("Location: error.html?error=" . urlencode("El teléfono solo debe contener números."));
         exit();
     }
 
@@ -57,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       "Nombre completo: " . $nombre_completo . "\n" . 
                       "Nacionalidad: " . $nacionalidad . "\n" .
                       "Domicilio: " . $domicilio . "\n" . 
+                      "Número de Teléfono: " . $telefono . "\n". 
                       "Código Postal: " . $codigo_postal . "\n" .
                       "Correo electrónico: " . $email . "\n" . 
                       "\n" .
