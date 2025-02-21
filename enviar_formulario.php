@@ -67,13 +67,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'equinoxioform@gmail.com'; // Asegúrate de que tu correo esté correcto
-        $mail->Password = 'ojumdwxlmtqrgsqs'; // Usa una contraseña de aplicación de Google
+        $mail->Username = 'bohemiaeditorial2025@gmail.com'; // Asegúrate de que tu correo esté correcto
+        $mail->Password = 'vhtxavcfkbgzxvgi'; // Usa una contraseña de aplicación de Google
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Remitente y destinatario
-        $mail->setFrom('equinoxioform@gmail.com', 'Editorial');
+        $mail->setFrom('bohemiaeditorial2025@gmail.com', 'Editorial');
         $mail->addAddress('fliulipi234@gmail.com'); // Cambia esto por tu correo
         $mail->addReplyTo($email, $nombre_completo);
 
