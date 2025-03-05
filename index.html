@@ -6,80 +6,112 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Editorial</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .LogoBohemia {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+    }
+  </style>
 </head>
 
 <body>
   <div class="form-container">
+    <img src="../Formulario/img/LogoBohemia.jpg" alt="" class="LogoBohemia">
     <h2>Formulario para Autores</h2>
     <form action="enviar_formulario.php" method="post" enctype="multipart/form-data"
       onsubmit="return validarFormulario()">
 
-      <!-- Nombre Completo -->
       <div class="input-container">
-        <input type="text" id="nombre_completo" name="nombre_completo" placeholder=" " required>
-        <label for="nombre_completo">Nombre Completo</label>
-        <div class="underline"></div>
+        <label for="nombre_completo">Nombre y Apellido Completo:</label>
+        <input type="text" id="nombre_completo" name="nombre_completo" required>
       </div>
 
-      <!-- Nacionalidad -->
       <div class="input-container">
-        <input type="text" id="nacionalidad" name="nacionalidad" placeholder=" " required>
-        <label for="nacionalidad">Nacionalidad</label>
-        <div class="underline"></div>
+        <label for="documento_identidad">Documento de Identidad:</label>
+        <input type="text" id="documento_identidad" name="documento_identidad" required>
       </div>
 
-      <!-- Domicilio y Código Postal -->
-      <div class="input-group">
-        <div class="input-container">
-          <input type="text" id="domicilio" name="domicilio" placeholder=" " required>
-          <label for="domicilio">Domicilio</label>
-          <div class="underline"></div>
-        </div>
-
-        <div class="input-container">
-          <input type="text" id="codigo_postal" name="codigo_postal" placeholder=" " required>
-          <label for="codigo_postal">Código Postal</label>
-          <div class="underline"></div>
-        </div>
+      <div class="input-container">
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" name="sexo" required>
+          <option value="masculino">Masculino</option>
+          <option value="femenino">Femenino</option>
+          <option value="otro">Otro</option>
+        </select>
       </div>
 
-      <!-- Correo Electrónico -->
       <div class="input-container">
-        <input type="email" id="email" name="email" placeholder=" " required>
-        <label for="email">Correo electrónico</label>
-        <div class="underline"></div>
+        <label for="nacionalidad">Nacionalidad:</label>
+        <input type="text" id="nacionalidad" name="nacionalidad" required>
       </div>
 
-      <!-- Numero de telefono-->
       <div class="input-container">
-        <label for="telefono">Número de Teléfono</label>
-        <input type="tel" id="telefono" name="telefono" pattern="[0-9]+" maxlength="15" required>
-        <small>Solo se permiten números</small>
+        <label for="direccion">Dirección Completa:</label>
+        <input type="text" id="direccion" name="domicilio" required>
       </div>
 
-      <!-- Foto del Autor -->
       <div class="input-container">
-        <input type="file" id="fotoautor" name="fotoautor" accept="image/*">
-        <label for="fotoautor">Foto del autor (JPG/PNG)</label>
+        <label for="otros_datos">Otros Datos Alternativos:</label>
+        <textarea id="otros_datos" name="otros_datos"></textarea>
+      </div>
+
+      <div class="input-container">
+        <label for="email">Email de Contacto:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="input-container">
+        <label for="telefono">Teléfono o Móvil de Contacto:</label>
+        <input type="tel" id="telefono" name="telefono" pattern="[0-9]+" required>
+      </div>
+
+      <div class="input-container">
+        <label for="menciones">Menciones Especiales:</label>
+        <textarea id="menciones" name="menciones"></textarea>
       </div>
 
       <h2>Información del Libro</h2>
 
-      <!-- ISBN -->
+      <div class="input-container">
+        <label for="Titulo">Titulo de la obra:</label>
+        <input type="text" id="titulo" name="titulo" required>
+      </div>
+
+      <div class="input-container">
+        <label for="razon_social">Razón Social:</label>
+        <input type="text" id="razon_social" name="razon_social" required>
+      </div>
+
+      <div class="input-container">
+        <label for="Selloeditorial">Sello editorial:</label>
+        <input type="text" id="Selloeditorial" name="sello_editorial" required>
+      </div>
+
+      <div class="input-container">
+        <label for="cuit">CUIT:</label>
+        <input type="text" id="cuit" name="cuit" required>
+      </div>
+
+      <!-- ISBN con validación mejorada -->
       <div class="input-group">
         <div class="input-container">
           <input type="text" id="isbn" name="isbn" pattern="\d{3}-\d-\d{2,5}-\d{2,7}-\d" maxlength="17" required
-            placeholder="Ej: 978-3-16-148410-0">
+            placeholder="Ej: 978-3-16-148410-0" oninput="formatISBN(this)">
           <label for="isbn">ISBN</label>
           <div class="underline"></div>
         </div>
         <div class="info-box">¿No tienes ISBN? Consulta <a href="https://www.isbn.org.ar/">aquí</a>.</div>
       </div>
 
-      <!-- DHDA -->
+      <!-- DHDA con formato validado -->
       <div class="input-group">
         <div class="input-container">
-          <input type="text" id="dhda" name="dnda" pattern="\d{6,7}/\d{4}" required placeholder="Ej: 1234567/2024">
+          <input type="text" id="dhda" name="dnda" pattern="\d{6,7}/\d{4}" maxlength="12" required
+            placeholder="Ej: 1234567/2024" oninput="formatDHDA(this)">
           <label for="dnda">DNDA</label>
           <div class="underline"></div>
         </div>
@@ -96,39 +128,52 @@
           <option value="lirico">Lirico</option>
           <option value="dramatico">Dramatico</option>
         </select>
-        <div class="underline"></div>
       </div>
 
-      <!-- Sello Editorial -->
       <div class="input-container">
-        <input type="text" id="sello_editorial" name="sello_editorial" placeholder=" ">
-        <label for="sello_editorial">Sello Editorial (si tiene)</label>
-        <div class="underline"></div>
+        <label for="subgenero">Subgénero de la Obra:</label>
+        <input type="text" id="subgenero" name="subgenero">
       </div>
 
-      <!-- Características del Título -->
       <div class="input-container">
-        <input type="text" id="caracteristicas_titulo" name="caracteristicas_titulo" placeholder=" " required>
-        <label for="caracteristicas_titulo">Características del título</label>
-        <div class="underline"></div>
+        <label for="tipo_obra">Tipo de Obra:</label>
+        <input type="text" id="tipo_obra" name="tipo_obra">
       </div>
 
-      <!-- Subtítulo -->
       <div class="input-container">
-        <input type="text" id="subtitulo" name="subtitulo" placeholder=" ">
-        <label for="subtitulo">Subtítulo (si tiene)</label>
-        <div class="underline"></div>
+        <label for="edicion">Edición:</label>
+        <input type="text" id="edicion" name="edicion" placeholder="Ej: Primera edición, Segunda edición revisada">
       </div>
 
-      <!-- Formato de impresión -->
+      <!-- Nuevo: Temas de la Obra -->
       <div class="input-container">
-        <select name="formato" id="formato">
-          <option value="" disabled selected>Selecciona un formato</option>
-          <option value="blanco_negro">Blanco y negro</option>
-          <option value="color">Color</option>
-          <option value="fotolibro">Fotolibro</option>
+        <label for="temas">Temas de la Obra:</label>
+        <textarea id="temas" name="temas" placeholder="Ej: Ciencia ficción, Terror, Romance"></textarea>
+      </div>
+
+      <div class="input-container">
+        <label for="idioma">Idioma:</label>
+        <input type="text" id="idioma" name="idioma">
+      </div>
+
+      <!-- Nuevo: Laminado Final -->
+      <div class="input-container">
+        <label for="laminado">Laminado Final:</label>
+        <select name="laminado" id="laminado">
+          <option value="" disabled selected>Selecciona el laminado</option>
+          <option value="brillante">Brillante</option>
+          <option value="mate">Mate</option>
         </select>
-        <div class="underline"></div>
+      </div>
+
+      <!-- Nuevo: Impresión en Blanco y Negro / Color -->
+      <div class="input-container">
+        <label for="impresion">Tipo de Impresión:</label>
+        <select name="impresion" id="impresion">
+          <option value="" disabled selected>Selecciona impresión</option>
+          <option value="blanco_negro">Blanco y Negro</option>
+          <option value="color">Color</option>
+        </select>
       </div>
 
       <!-- Tamaño del libro -->
@@ -150,14 +195,38 @@
         </div>
       </div>
 
-      <!-- Solapa -->
       <div class="input-container">
-        <select name="solapa" id="solapa">
-          <option value="" disabled selected>Selecciona una opción de solapa</option>
-          <option value="solapa_derecha">Solapa derecha</option>
-          <option value="solapa_izquierda">Solapa izquierda</option>
-        </select>
-        <div class="underline"></div>
+        <label for="paginas">Cantidad de Páginas:</label>
+        <input type="number" id="paginas" name="paginas" required>
+      </div>
+
+      <!-- Nuevo: Tapas con o sin solapa -->
+      <div class="input-container">
+        <label>Tapas:</label>
+        <div class="tamaño-container">
+          <div class="tamaño-option">
+            <label><input type="radio" name="tapas" value="con_solapa"> Con solapa</label>
+          </div>
+          <div class="tamaño-option">
+            <label><input type="radio" name="tapas" value="sin_solapa"> Sin solapa</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <label for="material">Material Complementario:</label>
+        <textarea id="material" name="material" placeholder="Ej: Ilustraciones, DVD, Mapas"></textarea>
+      </div>
+
+      <div class="input-container">
+        <label for="sintesis">Síntesis del Libro:</label>
+        <textarea id="sintesis" name="sintesis"></textarea>
+      </div>
+
+      <!-- Adjuntar más archivos complementarios -->
+      <div class="input-container">
+        <label for="archivos_adicionales">Material Complementario (Opcional):</label>
+        <input type="file" id="archivos_adicionales" name="archivos_adicionales[]" multiple>
       </div>
 
       <!-- Portada del libro -->

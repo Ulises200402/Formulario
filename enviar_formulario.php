@@ -20,23 +20,41 @@ function validarTelefono($telefono) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recupera los datos del formulario
+    // Obtener los valores del formulario y sanitizarlos
     $nombre_completo = htmlspecialchars($_POST['nombre_completo']);
+    $documento_identidad = htmlspecialchars($_POST['documento_identidad']);
+    $sexo = htmlspecialchars($_POST['sexo']);
     $nacionalidad = htmlspecialchars($_POST['nacionalidad']);
     $domicilio = htmlspecialchars($_POST['domicilio']);
-    $codigo_postal = htmlspecialchars($_POST['codigo_postal']);
+    $otros_datos = htmlspecialchars($_POST['otros_datos']);
     $email = htmlspecialchars($_POST['email']);
-    $isbn = htmlspecialchars($_POST['isbn']);
-    $dhda = htmlspecialchars($_POST['dnda']);
-    $genero = htmlspecialchars($_POST['genero']);
+    $telefono = htmlspecialchars($_POST['telefono']);
+    $menciones = htmlspecialchars($_POST['menciones']);
+  
+    // Información del libro
+    $titulo = htmlspecialchars($_POST['titulo']);
+    $razon_social = htmlspecialchars($_POST['razon_social']);
     $sello_editorial = htmlspecialchars($_POST['sello_editorial']);
-    $caracteristicas_titulo = htmlspecialchars($_POST['caracteristicas_titulo']);
-    $subtitulo = htmlspecialchars($_POST['subtitulo']);
-    $formato = htmlspecialchars($_POST['formato']);
-    $solapa = htmlspecialchars($_POST['solapa']);
-    $tamaño = isset($_POST['tamaño']) ? $_POST['tamaño'] : "No seleccionado";
-    $telefono = isset($_POST['telefono']) ? htmlspecialchars($_POST['telefono']) : "No proporcionado";
-    $acepto_terminos = $_POST['terminos'] === 'on' ? true : false;
+    $cuit = htmlspecialchars($_POST['cuit']);
+    $isbn = htmlspecialchars($_POST['isbn']);
+    $dnda = htmlspecialchars($_POST['dnda']);
+    $genero = htmlspecialchars($_POST['genero']);
+    $subgenero = htmlspecialchars($_POST['subgenero']);
+    $tipo_obra = htmlspecialchars($_POST['tipo_obra']);
+    $edicion = htmlspecialchars($_POST['edicion']);
+    $temas = htmlspecialchars($_POST['temas']);
+    $idioma = htmlspecialchars($_POST['idioma']);
+    $laminado = isset($_POST['laminado']) ? htmlspecialchars($_POST['laminado']) : "No seleccionado";
+    $impresion = isset($_POST['impresion']) ? htmlspecialchars($_POST['impresion']) : "No seleccionado";
+    $tamaño = isset($_POST['tamaño']) ? htmlspecialchars($_POST['tamaño']) : "No seleccionado";
+    $tapas = isset($_POST['tapas']) ? htmlspecialchars($_POST['tapas']) : "No seleccionado";
+    $material = isset($_POST['material']) ? htmlspecialchars($_POST['material']) : 'No proporcionado';
+    $sintesis = isset($_POST['sintesis']) ? htmlspecialchars($_POST['sintesis']) : 'No proporcionado';
+    $paginas = isset($_POST['paginas']) ? htmlspecialchars($_POST['paginas']) : "No proporcionado";
+    $archivos_adicionales = isset($_FILES['archivos_adicionales']) ? $_FILES['archivos_adicionales'] : null;
+    $portada = isset($_FILES['portada']) ? $_FILES['portada'] : null;
+    $archivo_libro = isset($_FILES['archivo_libro']) ? $_FILES['archivo_libro'] : null;
+    $acepto_terminos = isset($_POST['terminos']) && $_POST['terminos'] === 'on' ? true : false;
 
     // Verifica que se acepten los términos
     if (!$acepto_terminos) {
@@ -49,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    if (!validarDNDA($dhda)) {
+    if (!validarDNDA($dnda)) {
         header("Location: error.html?error=" . urlencode("Formato de DNDA inválido."));
         exit();
     }
@@ -81,37 +99,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isHTML(false);
         $mail->Subject = "Nuevo formulario enviado desde la editorial";
         $mail->Body = "Has recibido un nuevo formulario:\n\n" . 
-                      "\n" .
-                      "Información del autor:\n" .
+                      "Información del autor:\n" . 
                       "Nombre completo: " . $nombre_completo . "\n" . 
-                      "Nacionalidad: " . $nacionalidad . "\n" .
+                      "Documento de identidad: " . $documento_identidad . "\n" .
+                      "Sexo: " . $sexo . "\n" . 
+                      "Nacionalidad: " . $nacionalidad . "\n" . 
                       "Domicilio: " . $domicilio . "\n" . 
-                      "Número de Teléfono: " . $telefono . "\n". 
-                      "Código Postal: " . $codigo_postal . "\n" .
+                      "Otros datos: " . $otros_datos . "\n" .
                       "Correo electrónico: " . $email . "\n" . 
-                      "\n" .
+                      "Número de Teléfono: " . $telefono . "\n" . 
+                      "Menciones: " . $menciones . "\n\n" .
                       "Información del libro:\n" . 
+                      "Título: " . $titulo . "\n" .
+                      "Razón Social: " . $razon_social . "\n" . 
+                      "Sello Editorial: " . $sello_editorial . "\n" . 
+                      "CUIT: " . $cuit . "\n" . 
                       "ISBN: " . $isbn . "\n" . 
                       "DNDA: " . $dnda . "\n" . 
-                      "Género Literario: " . $genero . "\n" . 
-                      "Sello Editorial: " . $sello_editorial . "\n" . 
-                      "Características del título: " . $caracteristicas_titulo . "\n" . 
-                      "Subtítulo: " . $subtitulo . "\n" . 
-                      "Formato: " . $formato . "\n" . 
-                      "Solapa: " . $solapa . "\n" .
-                      "Tamaño seleccionado: " . $tamaño . "\n";
+                      "Género: " . $genero . "\n" . 
+                      "Subgénero: " . $subgenero . "\n" . 
+                      "Tipo de Obra: " . $tipo_obra . "\n" . 
+                      "Edición: " . $edicion . "\n" . 
+                      "Temas: " . $temas . "\n" . 
+                      "Idioma: " . $idioma . "\n" . 
+                      "Laminado: " . $laminado . "\n" . 
+                      "Impresión: " . $impresion . "\n" . 
+                      "Tamaño: " . $tamaño . "\n" . 
+                      "Tapas: " . $tapas . "\n" . 
+                      "Material: " . $material . "\n" . 
+                      "Síntesis: " . $sintesis . "\n" . 
+                      "Páginas: " . $paginas . "\n" . 
+                      "Acepto términos y condiciones: " . ($acepto_terminos ? "Sí" : "No") . "\n";
 
-        // Adjuntar archivos sin guardarlos en el servidor
-        if (!empty($_FILES['fotoautor']['tmp_name'])) {
-            $mail->addAttachment($_FILES['fotoautor']['tmp_name'], $_FILES['fotoautor']['name']);
+        // Adjuntar archivos
+        foreach (['archivos_adicionales', 'portada', 'archivo_libro'] as $fileKey) {
+            if (!empty($_FILES[$fileKey]['tmp_name'])) {
+                if (is_array($_FILES[$fileKey]['tmp_name'])) {
+                    foreach ($_FILES[$fileKey]['tmp_name'] as $index => $tmp_name) {
+                        if (!empty($tmp_name)) {
+                            $mail->addAttachment($tmp_name, $_FILES[$fileKey]['name'][$index]);
+                        }
+                    }
+                } else {
+                    $mail->addAttachment($_FILES[$fileKey]['tmp_name'], $_FILES[$fileKey]['name']);
+                }
+            }
         }
-        if (!empty($_FILES['portada']['tmp_name'])) {
-            $mail->addAttachment($_FILES['portada']['tmp_name'], $_FILES['portada']['name']);
-        }
-        if (!empty($_FILES['archivo_libro']['tmp_name'])) {
-            $mail->addAttachment($_FILES['archivo_libro']['tmp_name'], $_FILES['archivo_libro']['name']);
-        }
-
         // Enviar el correo
         if ($mail->send()) {
             header("Location: exito.html");
