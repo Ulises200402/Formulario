@@ -15,6 +15,24 @@
       max-width: 200px;
       height: auto;
     }
+
+    .autor-container {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      border-radius: 2%;
+    }
+
+    .remove-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      display: block;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -24,55 +42,64 @@
     <h2>Formulario para Autores</h2>
     <form action="enviar_formulario.php" method="post" enctype="multipart/form-data"
       onsubmit="return validarFormulario()">
+      <div id="autores-container">
+        <!-- Primer autor (obligatorio) -->
+        <div class="autor-container">
+          <h3>Autor 1</h3>
 
-      <div class="input-container">
-        <label for="nombre_completo">Nombre y Apellido Completo:</label>
-        <input type="text" id="nombre_completo" name="nombre_completo" required>
+          <div class="input-container">
+            <label>Nombre y Apellido Completo:</label>
+            <input type="text" name="autores[0][nombre_completo]" required>
+          </div>
+
+          <div class="input-container">
+            <label>Documento de Identidad:</label>
+            <input type="text" name="autores[0][documento_identidad]" required>
+          </div>
+
+          <div class="input-container">
+            <label>Sexo:</label>
+            <select name="autores[0][sexo]" required>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="input-container">
+            <label>Nacionalidad:</label>
+            <input type="text" name="autores[0][nacionalidad]" required>
+          </div>
+
+          <div class="input-container">
+            <label>Dirección Completa:</label>
+            <input type="text" name="autores[0][domicilio]" required>
+          </div>
+
+          <div class="input-container">
+            <label>Otros Datos Alternativos:</label>
+            <textarea name="autores[0][otros_datos]"></textarea>
+          </div>
+
+          <div class="input-container">
+            <label>Email de Contacto:</label>
+            <input type="email" name="autores[0][email]" required>
+          </div>
+
+          <div class="input-container">
+            <label>Teléfono o Móvil de Contacto:</label>
+            <input type="tel" name="autores[0][telefono]" pattern="[0-9]+" required>
+          </div>
+
+          <div class="input-container">
+            <label>Menciones Especiales:</label>
+            <textarea name="autores[0][menciones]"></textarea>
+          </div>
+        </div>
       </div>
 
-      <div class="input-container">
-        <label for="documento_identidad">Documento de Identidad:</label>
-        <input type="text" id="documento_identidad" name="documento_identidad" required>
-      </div>
-
-      <div class="input-container">
-        <label for="sexo">Sexo:</label>
-        <select id="sexo" name="sexo" required>
-          <option value="masculino">Masculino</option>
-          <option value="femenino">Femenino</option>
-          <option value="otro">Otro</option>
-        </select>
-      </div>
-
-      <div class="input-container">
-        <label for="nacionalidad">Nacionalidad:</label>
-        <input type="text" id="nacionalidad" name="nacionalidad" required>
-      </div>
-
-      <div class="input-container">
-        <label for="direccion">Dirección Completa:</label>
-        <input type="text" id="direccion" name="domicilio" required>
-      </div>
-
-      <div class="input-container">
-        <label for="otros_datos">Otros Datos Alternativos:</label>
-        <textarea id="otros_datos" name="otros_datos"></textarea>
-      </div>
-
-      <div class="input-container">
-        <label for="email">Email de Contacto:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-
-      <div class="input-container">
-        <label for="telefono">Teléfono o Móvil de Contacto:</label>
-        <input type="tel" id="telefono" name="telefono" pattern="[0-9]+" required>
-      </div>
-
-      <div class="input-container">
-        <label for="menciones">Menciones Especiales:</label>
-        <textarea id="menciones" name="menciones"></textarea>
-      </div>
+      <!-- Botón para añadir más autores -->
+      <button type="button" id="add-author-btn">Añadir Autor</button>
 
       <h2>Información del Libro</h2>
 
@@ -320,6 +347,71 @@
 
       return archivo.type === 'application/pdf' && archivo.size <= tamañoMaximo;
     }
+  </script>
+  <script>
+    document.getElementById('add-author-btn').addEventListener('click', function () {
+      let autoresContainer = document.getElementById('autores-container');
+      let autorCount = document.querySelectorAll('.autor-container').length;
+
+      let newAutor = document.createElement('div');
+      newAutor.classList.add('autor-container');
+      newAutor.innerHTML = `
+  <h3>Autor ${autorCount + 1}</h3>
+
+  <div class="input-container">
+    <label>Nombre y Apellido Completo:</label>
+    <input type="text" name="autores[${autorCount}][nombre_completo]" required>
+  </div>
+
+  <div class="input-container">
+    <label>Documento de Identidad:</label>
+    <input type="text" name="autores[${autorCount}][documento_identidad]" required>
+  </div>
+
+  <div class="input-container">
+    <label>Sexo:</label>
+    <select name="autores[${autorCount}][sexo]" required>
+      <option value="masculino">Masculino</option>
+      <option value="femenino">Femenino</option>
+      <option value="otro">Otro</option>
+    </select>
+  </div>
+
+  <div class="input-container">
+    <label>Nacionalidad:</label>
+    <input type="text" name="autores[${autorCount}][nacionalidad]" required>
+  </div>
+
+  <div class="input-container">
+    <label>Dirección Completa:</label>
+    <input type="text" name="autores[${autorCount}][domicilio]" required>
+  </div>
+
+  <div class="input-container">
+    <label>Otros Datos Alternativos:</label>
+    <textarea name="autores[${autorCount}][otros_datos]"></textarea>
+  </div>
+
+  <div class="input-container">
+    <label>Email de Contacto:</label>
+    <input type="email" name="autores[${autorCount}][email]" required>
+  </div>
+
+  <div class="input-container">
+    <label>Teléfono o Móvil de Contacto:</label>
+    <input type="tel" name="autores[${autorCount}][telefono]" pattern="[0-9]+" required>
+  </div>
+
+  <div class="input-container">
+    <label>Menciones Especiales:</label>
+    <textarea name="autores[${autorCount}][menciones]"></textarea>
+  </div>
+
+  <button type="button" class="remove-btn" onclick="this.parentNode.remove();">Eliminar Autor</button>
+  `;
+
+      autoresContainer.appendChild(newAutor);
+    });
   </script>
 </body>
 

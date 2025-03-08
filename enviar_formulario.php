@@ -20,17 +20,38 @@ function validarTelefono($telefono) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los valores del formulario y sanitizarlos
-    $nombre_completo = htmlspecialchars($_POST['nombre_completo']);
-    $documento_identidad = htmlspecialchars($_POST['documento_identidad']);
-    $sexo = htmlspecialchars($_POST['sexo']);
-    $nacionalidad = htmlspecialchars($_POST['nacionalidad']);
-    $domicilio = htmlspecialchars($_POST['domicilio']);
-    $otros_datos = htmlspecialchars($_POST['otros_datos']);
-    $email = htmlspecialchars($_POST['email']);
-    $telefono = htmlspecialchars($_POST['telefono']);
-    $menciones = htmlspecialchars($_POST['menciones']);
-  
+    // Procesar lista de autores desde el formulario dinámico
+$autores = $_POST['autores']; // Recibe el array de autores
+$autoresTexto = ""; // Variable para almacenar la info de todos los autores
+
+foreach ($autores as $index => $autor) {
+    $nombre = htmlspecialchars($autor['nombre_completo']);
+    $documento = htmlspecialchars($autor['documento_identidad']);
+    $sexo = htmlspecialchars($autor['sexo']);
+    $nacionalidad = htmlspecialchars($autor['nacionalidad']);
+    $domicilio = htmlspecialchars($autor['domicilio']);
+    $otros_datos = htmlspecialchars($autor['otros_datos']);
+    $email = htmlspecialchars($autor['email']);
+    $telefono = htmlspecialchars($autor['telefono']);
+    $menciones = htmlspecialchars($autor['menciones']);
+
+    if (!validarTelefono($telefono)) {
+        header("Location: error.html?error=" . urlencode("El teléfono del autor $nombre solo debe contener números."));
+        exit();
+    }
+
+    // Formatear la información de cada autor
+    $autoresTexto .= "Autor " . ($index + 1) . ":\n";
+    $autoresTexto .= "Nombre: $nombre\n";
+    $autoresTexto .= "Documento: $documento\n";
+    $autoresTexto .= "Sexo: $sexo\n";
+    $autoresTexto .= "Nacionalidad: $nacionalidad\n";
+    $autoresTexto .= "Domicilio: $domicilio\n";
+    $autoresTexto .= "Otros Datos: $otros_datos\n";
+    $autoresTexto .= "Email: $email\n";
+    $autoresTexto .= "Teléfono: $telefono\n";
+    $autoresTexto .= "Menciones Especiales: $menciones\n\n";
+}
     // Información del libro
     $titulo = htmlspecialchars($_POST['titulo']);
     $razon_social = htmlspecialchars($_POST['razon_social']);
@@ -93,22 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Remitente y destinatario
         $mail->setFrom('bohemiaeditorial2025@gmail.com', 'Editorial');
         $mail->addAddress('fliulipi234@gmail.com'); // Cambia esto por tu correo
-        $mail->addReplyTo($email, $nombre_completo);
+        $mail->addReplyTo($autores[0]['email'], $autores[0]['nombre_completo']); // Usa el email del primer autor
 
         // Contenido del correo
         $mail->isHTML(false);
         $mail->Subject = "Nuevo formulario enviado desde la editorial";
         $mail->Body = "Has recibido un nuevo formulario:\n\n" . 
                       "Información del autor:\n" . 
-                      "Nombre completo: " . $nombre_completo . "\n" . 
-                      "Documento de identidad: " . $documento_identidad . "\n" .
-                      "Sexo: " . $sexo . "\n" . 
-                      "Nacionalidad: " . $nacionalidad . "\n" . 
-                      "Domicilio: " . $domicilio . "\n" . 
-                      "Otros datos: " . $otros_datos . "\n" .
-                      "Correo electrónico: " . $email . "\n" . 
-                      "Número de Teléfono: " . $telefono . "\n" . 
-                      "Menciones: " . $menciones . "\n\n" .
+                      $autoresTexto . "\n" . 
                       "Información del libro:\n" . 
                       "Título: " . $titulo . "\n" .
                       "Razón Social: " . $razon_social . "\n" . 
